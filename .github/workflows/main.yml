@@ -24,8 +24,9 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Instalar SDK Android 35
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;35.0.0'
 
       - name: Restaurar chave de teste opcional
         env:
