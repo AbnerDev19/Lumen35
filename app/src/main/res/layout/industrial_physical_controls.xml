@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:gravity="center_vertical" android:padding="4dp">
+    <Button android:id="@+id/physical_film" style="@style/IndustrialReadout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:minHeight="48dp" android:minWidth="48dp" android:background="@drawable/industrial_control"
+        android:text="@string/industrial_film_dial" />
+    <Button android:id="@+id/physical_ev" style="@style/IndustrialReadout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:minHeight="48dp" android:minWidth="48dp" android:background="@drawable/industrial_control"
+        android:text="@string/ui_ev" />
+    <Button android:id="@+id/physical_aperture" style="@style/IndustrialReadout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:minHeight="48dp" android:minWidth="48dp" android:background="@drawable/industrial_control"
+        android:text="@string/ui_retrato" />
+    <Button android:id="@+id/physical_mode" style="@style/IndustrialReadout"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:minHeight="48dp" android:minWidth="48dp" android:background="@drawable/industrial_control"
+        android:text="@string/industrial_mode" />
+</LinearLayout>

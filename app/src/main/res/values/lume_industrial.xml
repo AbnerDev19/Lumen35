@@ -1,0 +1,29 @@
+<resources>
+    <color name="industrial_matte">#0E0E0F</color>
+    <color name="industrial_panel">#202124</color>
+    <color name="industrial_line">#73767C</color>
+    <color name="industrial_silver">#CCD0D4</color>
+    <color name="industrial_text">#F2F2EF</color>
+    <color name="industrial_green">#AFC3AB</color>
+    <color name="industrial_orange">#FFA454</color>
+    <color name="industrial_red">#FF6262</color>
+    <color name="industrial_pressed">#36312A</color>
+    <dimen name="industrial_gap">8dp</dimen>
+    <dimen name="industrial_gutter">16dp</dimen>
+    <dimen name="industrial_radius">8dp</dimen>
+    <dimen name="industrial_target">48dp</dimen>
+    <style name="IndustrialLabel">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/industrial_text</item>
+    </style>
+    <style name="IndustrialReadout">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/industrial_silver</item>
+    </style>
+    <style name="IndustrialHeading" parent="IndustrialLabel">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

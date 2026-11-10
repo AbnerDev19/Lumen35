@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:minHeight="@dimen/industrial_target" android:gravity="center_vertical"
+    android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="8dp" android:paddingBottom="8dp"
+    android:background="@drawable/industrial_control" android:orientation="horizontal"
+    android:focusable="true" android:clickable="true">
+    <TextView android:id="@+id/industrial_label" style="@style/IndustrialLabel"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:importantForAccessibility="no" />
+    <TextView android:id="@+id/industrial_value" style="@style/IndustrialReadout"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginStart="12dp" android:importantForAccessibility="no" />
+</LinearLayout>

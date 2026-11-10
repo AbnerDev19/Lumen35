@@ -1,0 +1,9 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="8dp" android:background="@color/industrial_matte">
+    <TextView android:id="@+id/evf_readout" style="@style/IndustrialReadout"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/evf_stock" style="@style/IndustrialLabel"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/industrial_green" />
+</LinearLayout>

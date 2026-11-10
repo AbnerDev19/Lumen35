@@ -1,0 +1,4 @@
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/industrial_matte" />
+    <foreground android:drawable="@mipmap/lume_mark_fg" />
+</adaptive-icon>

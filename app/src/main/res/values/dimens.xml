@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="lume_touch_target">48dp</dimen>
+    <dimen name="lume_control_text">11sp</dimen>
+</resources>
