@@ -264,4 +264,9 @@
     <string name="industrial_frame_metadata">Q%1$s · %2$s\n%3$s</string>
     <string name="industrial_last_exposure">Última · %1$s</string>
     <string name="industrial_stock_iso">ISO %1$d nominal</string>
+    <string name="settings_subtitle">Captura, visor e efeitos de filme</string>
+    <string name="settings_capture">CAPTURA</string>
+    <string name="settings_viewfinder">VISOR</string>
+    <string name="settings_photo">FOTO E MOLDURA</string>
+    <string name="settings_film">EFEITOS DE FILME</string>
 </resources>

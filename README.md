@@ -6,7 +6,7 @@ Câmera analógica digital para Android 10 ou superior. Captura com CameraX e re
 
 - Toque no visor para focar, faça pinça para ajustar o zoom e segure para comparar com o original.
 - Deslize pelo carrossel de filmes. Toque no filme selecionado para abrir a intensidade. A 0%, o motor preserva os pixels que recebe. Enquadramento, Retrato, moldura e carimbo têm controles próprios.
-- **Câmera** seleciona o corpo simulado e **Lente** seleciona a assinatura óptica simulada. **Celular** seleciona os sensores que o Android expõe e os níveis de zoom. **Selfie** alterna frente e trás.
+- **Câmera** seleciona o corpo simulado. **Celular** seleciona os sensores que o Android expõe e os níveis de zoom. **Selfie** alterna frente e trás.
 - A proporção na barra superior abre a moldura. O botão **Formato** permite seguir o corpo ou escolher 3:4, 1:1 ou 6:7.
 - O controle **EV** usa a faixa de compensação do sensor ativo. **Ajustes** contém temporizador de 3 ou 10 segundos, qualidade JPEG, resolução de saída, som, vibração, grade, horizonte e impressão de ISO e obturador.
 - O botão de volume também dispara. O obturador fica disponível após a câmera entregar o JPEG para revelação, com até quatro fotos em andamento.

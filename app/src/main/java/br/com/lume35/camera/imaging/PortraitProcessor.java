@@ -49,7 +49,7 @@ public final class PortraitProcessor {
             float[] confidence = new float[mw * mh];
             for (int i = 0; i < confidence.length; i++) confidence[i] = buffer.getFloat();
 
-            float scale = Math.min(1, 400f / Math.max(width, height));
+            float scale = Math.min(1, 720f / Math.max(width, height));
             int w = Math.max(1, Math.round(width * scale)), h = Math.max(1, Math.round(height * scale));
             reduced = Bitmap.createScaledBitmap(source, w, h, true);
             int[] pixels = new int[w * h];

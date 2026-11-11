@@ -150,7 +150,6 @@ public final class MainActivity extends ComponentActivity {
     private TextView flip;
     private TextView flash;
     private TextView date;
-    private TextView evfReadout, evfStock;
     private String lastExposure;
     private TextView roll;
     private TextView strengthLabel;
@@ -190,7 +189,7 @@ public final class MainActivity extends ComponentActivity {
     private CameraStyle cameraStyle=CameraStyle.CLASSIC;
     private LensStyle lensStyle=LensStyle.NEUTRAL;
     private int portraitStrength;
-    private TextView bodyButton,profileButton,modeButton,formatLabel;
+    private TextView bodyButton,modeButton,formatLabel;
     private LinearLayout cameraRoot;
     private FrameLayout cameraStage;
     private Uri lastPhoto;
@@ -216,8 +215,7 @@ public final class MainActivity extends ComponentActivity {
         showInfo = preferences.getBoolean("show_info", true);
         frameNumber = preferences.getInt("frame", 0);
         try{cameraStyle=CameraStyle.valueOf(preferences.getString("body","CLASSIC"));}catch(IllegalArgumentException ignored){}
-        try{lensStyle=LensStyle.valueOf(preferences.getString("optics","NEUTRAL"));}catch(IllegalArgumentException ignored){}
-        printFrame = PrintFrame.valueOf(preferences.getString("print_frame", cameraStyle.defaultFrame.name()));
+                printFrame = PrintFrame.valueOf(preferences.getString("print_frame", cameraStyle.defaultFrame.name()));
         portraitStrength = Math.max(0, Math.min(100, preferences.getInt("portrait_strength",
                 preferences.getBoolean("portrait", false) ? 30 : 0)));
         String previousPhoto = preferences.getString("photo", null);
@@ -363,10 +361,6 @@ public final class MainActivity extends ComponentActivity {
         message.addView(permissionButton, permissionParams);
         permissionButton.setVisibility(View.GONE);
 
-        View evf = getLayoutInflater().inflate(R.layout.industrial_evf, root, false);
-        evfReadout = evf.findViewById(R.id.evf_readout);
-        evfStock = evf.findViewById(R.id.evf_stock);
-        root.addView(evf);
         LinearLayout detail = row();
         root.addView(detail, new LinearLayout.LayoutParams(-1, dp(28)));
         roll = text("", 13, AMBER, MONO);
@@ -415,7 +409,6 @@ public final class MainActivity extends ComponentActivity {
         LinearLayout chips = row();
         root.addView(chips, new LinearLayout.LayoutParams(-1, dp(60)));
         bodyButton = chip(chips, getString(R.string.ui_camera), getString(R.string.ui_escolher_estilo_de_camera), this::chooseBody);
-        profileButton = chip(chips, getString(R.string.ui_lente), getString(R.string.ui_escolher_lente_classica), this::chooseOptics);
         modeButton = chip(chips, getString(R.string.ui_retrato), getString(R.string.ui_ajustar_desfoque_do_retrato), this::choosePortrait);
         lensButton = chip(chips, getString(R.string.ui_celular), getString(R.string.ui_escolher_sensor_fisico_e_zoom), this::chooseLens);
 
@@ -498,8 +491,7 @@ public final class MainActivity extends ComponentActivity {
         new android.app.AlertDialog.Builder(this).setTitle(getString(R.string.ui_compensacao_de_exposicao))
                 .setSingleChoiceItems(values, state.getExposureCompensationIndex() - low, (dialog, choice) -> {
                     var control = controller.getCameraControl();
-                    if (control != null) control.setExposureCompensationIndex(choice + low)
-                            .addListener(this::updateReadout, ContextCompat.getMainExecutor(this));
+                    if (control != null) control.setExposureCompensationIndex(choice + low);
                     dialog.dismiss();
                 }).setPositiveButton(getString(R.string.ui_fechar), null).show();
     }
@@ -555,19 +547,9 @@ public final class MainActivity extends ComponentActivity {
         });
     }
 
-    private void chooseOptics() {
-        CatalogSelectors.optics(this, lensStyle, next -> {
-            lensStyle = next;
-            preferences.edit().putString("optics", next.name()).apply();
-            updateProfiles();
-        });
-    }
-
     private void updateProfiles() {
         bodyButton.setText(getString(R.string.ui_camera));
         bodyButton.setContentDescription(getString(R.string.ui_camera_157) + cameraStyle.label(this));
-        profileButton.setText(getString(R.string.ui_lente));
-        profileButton.setContentDescription(getString(R.string.ui_lente_158) + lensStyle.label(this));
         bodyButton.setTextColor(cameraStyle.accent);
         bodyButton.setBackground(touchBackground(PANEL, cameraStyle.accent, 10));
         int tint = Color.rgb(Color.red(cameraStyle.accent) / 5, Color.green(cameraStyle.accent) / 5,
@@ -814,8 +796,7 @@ public final class MainActivity extends ComponentActivity {
             runOnUiThread(() -> {
                 if (isDestroyed()) return;
                 lastExposure = exposure;
-                updateReadout();
-            });
+                    });
             if (result.overlayMissing) runOnUiThread(() -> notifyUser(getString(R.string.effect_overlay_error)));
             portraitMissing = capture.portraitStrength() > 0 && !result.portraitApplied;
             int next = preferences.getInt("frame", 0) + 1;
@@ -883,7 +864,6 @@ public final class MainActivity extends ComponentActivity {
     }
 
     private void updateRoll() {
-        if (evfStock != null) updateReadout();
         roll.setText(pendingPhotos > 0 ? getString(R.string.ui_revelando) + pendingPhotos
                 : String.format(Locale.ROOT, getString(R.string.ui_foto_02d), frameNumber));
     }
@@ -901,27 +881,7 @@ public final class MainActivity extends ComponentActivity {
         updateLook();
     }
 
-    private void updateReadout() {
-        if (evfReadout == null || evfStock == null) return;
-        android.os.BatteryManager battery = getSystemService(android.os.BatteryManager.class);
-        int percent = battery == null ? -1 : battery.getIntProperty(android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        String batteryLabel = percent < 0 || percent > 100 ? "—" : percent + "%";
-        String ev = "—";
-        if (controller != null && controller.getCameraInfo() != null) {
-            var state = controller.getCameraInfo().getExposureState();
-            if (state.isExposureCompensationSupported()) {
-                ev = String.format(Locale.ROOT, "%+.1f", state.getExposureCompensationIndex()
-                        * state.getExposureCompensationStep().doubleValue());
-            }
-        }
-        String line = getString(R.string.industrial_evf_status, ev, batteryLabel);
-        if (lastExposure != null) line += "\n" + getString(R.string.industrial_last_exposure, lastExposure);
-        evfReadout.setText(line);
-        evfStock.setText(selected.label(this).toUpperCase(Locale.ROOT));
-    }
-
     private void updateLook() {
-        updateReadout();
         strengthLabel.setText(String.format(Locale.ROOT, getString(R.string.ui_intensidade_d), intensity));
         finish.refresh();
     }
@@ -932,7 +892,7 @@ public final class MainActivity extends ComponentActivity {
         shutter.setContentDescription(pendingPhotos == 0 ? getString(R.string.ui_tirar_foto) : getString(R.string.ui_tirar_foto_revelando) + pendingPhotos);
         if (!countingDown) updateRoll();
         shutter.invalidate();
-        bodyButton.setEnabled(!working);profileButton.setEnabled(!working);modeButton.setEnabled(!working);lensButton.setEnabled(cameraReady&&!working);
+        bodyButton.setEnabled(!working);modeButton.setEnabled(!working);lensButton.setEnabled(cameraReady&&!working);
         flip.setEnabled(cameraReady && hasBothLenses && !working);
         flip.setAlpha(flip.isEnabled() ? 1f : .42f);
         flash.setEnabled(supportsFlash() && !working);

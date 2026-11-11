@@ -4,7 +4,6 @@ import android.app.Activity;
 import br.com.lume35.camera.R;
 import br.com.lume35.camera.model.CameraStyle;
 import br.com.lume35.camera.model.Film;
-import br.com.lume35.camera.model.LensStyle;
 import java.util.function.Consumer;
 
 public final class CatalogSelectors {
@@ -38,13 +37,4 @@ public final class CatalogSelectors {
                 items, cameraStyle.ordinal(), index -> apply.accept(bodies[index]));
     }
 
-    public static void optics(Activity activity, LensStyle lensStyle, Consumer<LensStyle> apply) {
-        java.util.ArrayList<VisualPicker.Item> items = new java.util.ArrayList<>();
-        LensStyle[] lenses = LensStyle.values();
-        for (LensStyle lens : lenses) {
-            items.add(new VisualPicker.Item(lens.label(activity), lens.description(activity), lens.asset(), activity.getColor(R.color.lume_amber)));
-        }
-        VisualPicker.show(activity, activity.getString(R.string.ui_lentes_classicas), activity.getString(R.string.ui_assinaturas_opticas_simuladas_para_trocar_o_s),
-                items, lensStyle.ordinal(), index -> apply.accept(lenses[index]));
-    }
 }
